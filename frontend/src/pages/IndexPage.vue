@@ -21,7 +21,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card>
+    <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Docker Concepts (สรุปสั้น ๆ)</div>
         <q-list bordered separator class="q-mt-sm">
@@ -29,6 +29,22 @@
             <q-item-section>
               <q-item-label>{{ item.title }}</q-item-label>
               <q-item-label caption>{{ item.detail }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference</div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(cmd, index) in dockerCommands" :key="index">
+            <q-item-section>
+              <q-item-label>
+                <code>{{ cmd.command }}</code>
+              </q-item-label>
+              <q-item-label caption>{{ cmd.description }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -77,6 +93,29 @@ const dockerItems = [
   {
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
+  },
+]
+
+const dockerCommands = [
+  {
+    command: 'docker build -t my-quasar-frontend:latest -f frontend/Dockerfile ./frontend',
+    description: 'สร้าง image จาก Dockerfile ใช้เมื่อแก้โค้ดแล้วต้องการ build ใหม่',
+  },
+  {
+    command: 'docker run -d -p 8080:80 --name my-quasar-frontend-container my-quasar-frontend:latest',
+    description: 'รัน container จาก image เบื้องหลัง โดยส่งพอร์ต 8080 ของเครื่องไปยังพอร์ต 80 ใน container',
+  },
+  {
+    command: 'docker ps',
+    description: 'แสดง container ที่กำลังทำงานอยู่ ใช้ตรวจสอบว่า container รันอยู่จริงหรือไม่',
+  },
+  {
+    command: 'docker stop my-quasar-frontend-container',
+    description: 'หยุดการทำงานของ container ที่กำลังรันอยู่ ก่อนลบหรือรันใหม่ด้วยชื่อเดิม',
+  },
+  {
+    command: 'docker compose up -d --build',
+    description: 'build และรันบริการทั้งหมดในไฟล์ docker-compose.yml เบื้องหลัง ใช้เมื่อต้องการรันหลายบริการพร้อมกัน',
   },
 ]
 </script>
